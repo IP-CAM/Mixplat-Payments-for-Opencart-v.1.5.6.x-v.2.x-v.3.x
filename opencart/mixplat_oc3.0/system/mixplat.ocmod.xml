@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <name>mixplat</name>
+  <code>mixplat</code>
+  <version>1.0.0</version>
+  <author>mixplat</author>
+  <link>https://mixplat.ru/</link>
+  <file path="catalog/view/theme/*/template/account/order_list.twig">
+    <operation>
+      <search>
+        <![CDATA[ {% for order in orders %} ]]>
+      </search>
+      <add position="after">
+        <![CDATA[ 
+          <div class="pull-left">
+              {% if (order['mixplatpro_order'] is defined and order['mixplatpro_order'] != '') %}
+                  <script> 
+                    $(document).ready(function(){
+                      $('a[href$="order_id={{ order['order_id'] }}"]').before("<div class=\"pull-left\" style=\"margin-right:4px;\" ><a class=\"{{ order['mixplatprostyle'] }}\" href=\"index.php?route=extension/payment/mixplat/go&code={{ order['mixplatpro_order'] }}&order_id={{ order['order_id'] }}\" >{{ order['mixplatprotext'] }}</a></div>"); 
+                    }); 
+                  </script>
+              {% endif %}
+          </div> 
+        ]]>
+      </add>
+    </operation>
+  </file>
+  <file path="catalog/controller/account/order.php">
+    <operation>
+      <search>
+        <![CDATA[ $data['orders'][] = array( ]]>
+      </search>
+      <add position="before">
+        <![CDATA[ //mixplatPRO
+        
+          $this->load->model('extension/payment/mixplat');
+          $mixplatpro = '';
+          $mixplatprotext = '';
+          $mixplatprostyle = '';
+          $mixplatproquery = $this->model_extension_payment_mixplat->getPaymentAcc($result['order_id']);
+          if (strpos($mixplatproquery['payment_code'], 'mixplat') !== false && $this->config->get('payment_'.$mixplatproquery['payment_code'].'_status')){
+                if ($this->config->get('payment_'.$mixplatproquery['payment_code'].'_on_status_id') == $mixplatproquery['order_status_id']){
+                  $this->language->load('extension/payment/mixplatpro');
+                  $this->language->load('extension/payment/'.$mixplatproquery['payment_code']);
+                  $mixplatprotext = $this->language->get('pay_text');
+                  $mixplatpro = $this->model_extension_payment_mixplat->getSecureCode($result['order_id']);
+                  $mixplatprostyle = 'btn btn-primary btn-info mixplat';
+                }
+          }
+          //mixplatPRO END ]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[ $data['orders'][] = array( ]]>
+      </search>
+      <add position="after">
+        <![CDATA[ //mixplatPRO
+          'mixplatpro_order'      => $mixplatpro,
+          'mixplatprostyle'      => $mixplatprostyle,
+          'mixplatprotext'      => $mixplatprotext,
+
+          //mixplatPRO END ]]>
+      </add>
+    </operation>
+  </file>
+  <file path="admin/controller/common/column_left.php">
+    <operation>
+      <search><![CDATA[// Voucher]]></search>
+      <add position="before"><![CDATA[ 
+      if ($this->user->hasPermission('access', 'extension/payment/mixplat') || $this->user->hasPermission('access', 'extension/payment/mixplat_card')) {
+        $sale[] = array(
+          'name'     => 'MIXPLAT',
+          'href'     => $this->url->link('extension/payment/mixplat/status', 'user_token=' . $this->session->data['user_token'], true),
+          'children' => array()   
+        );  
+      }]]></add>
+    </operation>
+  </file>
+  <file path="admin/controller/sale/order.php">
+    <operation>
+       <search>
+       <![CDATA[ $this->response->setOutput($this->load->view('sale/order_info', $data)); ]]>
+       </search>
+       <add position="before">
+       <![CDATA[
+        if (strpos($order_info['payment_code'], 'mixplat') !== false && $this->config->get('payment_'.$order_info['payment_code'].'_status')){
+          $this->language->load('extension/payment/mixplatpro');
+          $this->language->load('extension/payment/'.$order_info['payment_code']);
+          $data['mixplatprotext'] = $this->language->get('pay_text_admin');
+          $this->load->model('extension/payment/mixplat');
+          $data['mixplatpro_link'] = $this->model_extension_payment_mixplat->getCustomFields($order_info, 'pay_link');
+        }
+       ]]>
+       </add>
+    </operation>
+  </file>
+  <file path="admin/view/template/sale/order_info.twig">
+    <operation>
+    <search offset="1">
+       <![CDATA[ <div id="history"></div> ]]>
+    </search>
+    <add position="after">
+         <![CDATA[ {% if (mixplatpro_link is defined) %} 
+          <div class="form-group">
+            <label class="col-sm-2 control-label">{{ mixplatprotext }}</label>
+            <div class="col-sm-10">{{ mixplatpro_link }}</div>
+          </div>
+          {% endif %}
+        ]]>
+    </add>
+  </operation>
+  </file>
+  <file path="catalog/model/checkout/order.php">
+    <operation>
+    <search>
+       <![CDATA[ $this->cache->delete('product'); ]]>
+    </search>
+    <add position="after">
+        <![CDATA[ 
+        if ($order_info['order_status_id'] && $order_status_id) {
+          if (strpos($order_info['payment_code'], 'mixplat') !== false && $this->config->get('payment_'.$order_info['payment_code'].'_status')){
+                if ($this->config->get('payment_'.$order_info['payment_code'].'_on_status_id') == $order_status_id){
+                  $this->language->load('extension/payment/mixplatpro');
+                  $this->language->load('extension/payment/'.$order_info['payment_code']);
+                  $this->load->model('extension/payment/mixplat');
+                  $merchant = $this->model_extension_payment_mixplat->getCustomFields($order_info, 'pay_link');
+                  $merchant_url = sprintf($this->language->get('merchant_url'), $merchant);
+                  if ($comment){
+                    $comment .= "\n\n";
+                  }
+                  $procomment = $comment . sprintf($this->language->get('text_history'), $merchant);
+                  $order_history_id = $this->db->getLastId();
+                  $this->db->query("UPDATE `" . DB_PREFIX . "order_history` SET comment = '" .  $this->db->escape($procomment) . "' WHERE order_id = '" . (int)$order_id . "' AND order_status_id = '" . (int)$order_status_id ."' AND  order_history_id = '" .$order_history_id. "' ");
+                }
+          }
+        }
+        ]]>
+    </add>
+  </operation>
+  </file>
+</modification>

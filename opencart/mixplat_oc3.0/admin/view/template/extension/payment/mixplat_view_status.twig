@@ -1,0 +1,57 @@
+{{ header }} 
+{{ column_left }} 
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %} 
+        <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+        {% endfor %} 
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default"> 
+      <div class="panel-body">
+      <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>{{ id }}</th>
+            <th class="text-center">{{ num_order }}</th>
+            <th>{{ sum }}</th>
+            <th>{{ label }}</th>
+            <th class="text-center">{{ status }}</th>
+            <th>{{ user }}</th>
+            <th>{{ email }}</th>
+            <th>{{ date_created }}</th>
+            <th>{{ date_enroled }}</th>
+            <th>{{ sender }}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for viewstatus in viewstatuses %} 
+          <tr>
+          <td>{{ viewstatus['pay_id'] }}</td>
+          <td class="text-center">{{ viewstatus['num_order'] }}</td>
+          <td>{{ viewstatus['sum'] }}</td>
+          <td>{{ viewstatus['label'] }}</td>
+          <td class="text-center">{{ viewstatus['status'] }}</td>
+          <td>{{ viewstatus['user'] }}</td>
+          <td>{{ viewstatus['email'] }}</td>
+          <td>{{ viewstatus['date_created'] }}</td>
+          <td>{{ viewstatus['date_enroled'] }}</td>
+          <td>{{ viewstatus['sender'] }}</td>
+          <td><a class="btn btn-info" href="{{ viewstatus['info'] }}"><i class="fa fa-eye"></i></a></td>
+          </tr>
+        {% endfor %}
+ 
+        </tbody>
+        </table>
+<div class="pagination">{{ pagination }}</div>
+  </div>
+</div>
+</div>
+</div>
+{{ footer }}

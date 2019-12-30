@@ -1,0 +1,872 @@
+{{ header }}{{ column_left }} 
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-cod" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %} 
+        <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+        {% endfor %} 
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if (error_warning) %} 
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }} 
+      <button type="button" class="close" data-dismiss="alert">&times;</button> 
+    </div>
+    {% endif %} 
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i>{{ entry_reg }}</h3>
+      </div>
+      <div class="panel-body">
+        <h3>{{ entry_modinfo }}</h3>
+        <p>{{ entry_modver }} {{ version }}<br>
+        {{ entry_shopver }} Opencart {{ shopversion }}</p>
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-cod" class="form-horizontal">
+          <table class="table">  
+        <tr>
+        <td>{{ entry_status }}</td>
+        <td><select name="{{ pname }}_status">
+            {% if (mixplatpro_status) %} 
+            <option value="1" selected="selected">{{ text_enabled }}</option>
+            <option value="0">{{ text_disabled }}</option>
+            {% else %} 
+            <option value="1">{{ text_enabled }}</option>
+            <option value="0" selected="selected">{{ text_disabled }}</option>
+            {% endif %} 
+          </select></td>
+        </tr>
+        <tr>
+          <td width="25%">{{ entry_server }} <a class="toolt" title="{{ help_server }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% if (mixplatpro_server) %} 
+            <input type="radio" name="{{ pname }}_server" value="0" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_server" value="1" checked="checked" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_server" value="0" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_server" value="1" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>    
+        <tr>
+          <td>{{ entry_debug }} <a class="toolt" title="{{ help_debug }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% if (mixplatpro_debug) %} 
+            <input type="radio" name="{{ pname }}_debug" value="1" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_debug" value="0" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_debug" value="1" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_debug" value="0" checked="checked" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_name_tab }}</td>
+          <td>{% if (mixplatpro_name_attach) %} 
+            <input id="named_tab" type="radio" name="{{ pname }}_name_attach" value="0" />
+            {{ text_default }} 
+            <input id="namep_tab" type="radio" name="{{ pname }}_name_attach" value="1" checked="checked" />
+            {{ entry_proizvol }} 
+            {% else %} 
+            <input id="named_tab" type="radio" name="{{ pname }}_name_attach" value="0" checked="checked" />
+            {{ text_default }} 
+            <input id="namep_tab" type="radio" name="{{ pname }}_name_attach" value="1" />
+            {{ entry_proizvol }} 
+            {% endif %} 
+            <br><br>
+            <textarea class="hidedname" {% if (mixplatpro_name_attach) %}style="display:none;"{% endif %} cols="50" rows="1" disabled>{{ entry_name_ro }}</textarea>
+            <span class="hidename" {% if (not mixplatpro_name_attach) %}style="display:none;"{% endif %}>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_name_{{language.language_id }}" cols="50" rows="1">{% if _context['mixplatpro_name_' ~ language.language_id] %}{{ _context['mixplatpro_name_' ~ language.language_id] }}{% endif %}</textarea><br />
+            {% endfor %}<br />
+            {% if (_context['error_name_' ~ language.language_id]) %} 
+              <span class="error">{{_context['error_name_' ~ language.language_id]}}</span>
+            {% endif %} 
+              <br />
+            </span>
+          </td>
+        </tr>
+      </table>
+      <table class="table">
+        <h3>{{ entry_kabinfo }}</h3>
+        <tr>
+          <td><span class="required">*</span> {{ entry_password }}</td>
+          <td><input type="password" name="{{ pname }}_password" value="{% if (mixplatpro_password is defined) %}{{ mixplatpro_password }}{% endif %}" />
+          <br />
+          {% if (error_password) %} 
+          <span class="error">{{ error_password }}</span>
+          {% endif %}</td>
+        </tr>
+        <td width="25%"><span class="required">*</span> {{ entry_project_id }}</td>
+          <td><input type="text" name="{{ pname }}_project_id" value="{% if (mixplatpro_project_id is defined) %}{{ mixplatpro_project_id }}{% endif %}" />
+          <br />
+          {% if (error_project_id) %} 
+          <span class="error">{{ error_project_id }}</span>
+          {% endif %}</td>
+        </tr>
+        <tr>
+          <td width="25%"><span class="required">*</span> {{ entry_payment_form_id }}</td>
+          <td><input type="text" name="{{ pname }}_payment_form_id" value="{% if (mixplatpro_payment_form_id is defined) %}{{ mixplatpro_payment_form_id }}{% endif %}" />
+          <br />
+          {% if (error_payment_form_id) %} 
+          <span class="error">{{ error_payment_form_id }}</span>
+          {% endif %}</td>
+        </tr>
+        </table>
+        <table class="table">
+        <h3>{{ entry_payinfo }}</h3>
+        {% if (twostage_show == constant('true')) %} 
+        <tr>
+          <td width="25%">{{ entry_twostage }} <a class="toolt" title="{{ help_twostage }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% if (mixplatpro_twostage) %} 
+            <input type="radio" name="{{ pname }}_twostage" value="0" />
+            {{ text_onestage }} 
+            <input type="radio" name="{{ pname }}_twostage" value="1" checked="checked" />
+            {{ text_twostage }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_twostage" value="0" checked="checked" />
+            {{ text_onestage }} 
+            <input type="radio" name="{{ pname }}_twostage" value="1" />
+            {{ text_twostage }} 
+            {% endif %}</td>
+        </tr>
+        {% endif %} 
+        <tr>
+          <td>{{ entry_otlog }} <a class="toolt" title="{{ help_otlog }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% if (mixplatpro_otlog == 'pay') %} 
+            <input type="radio" name="{{ pname }}_otlog" id="standard_tab" value="0" />
+            {{ entry_otlog_standard }} 
+            <input type="radio" name="{{ pname }}_otlog" id="pay_tab" value="pay" checked="checked" />
+            {{ entry_otlog_pay }} 
+            <input type="radio" name="{{ pname }}_otlog" id="stock_tab" value="stock" />
+            {{ entry_otlog_stock }} 
+            {% elseif (mixplatpro_otlog == 'stock') %} 
+            <input type="radio" name="{{ pname }}_otlog" id="standard_tab" value="0" />
+            {{ entry_otlog_standard }} 
+            <input type="radio" name="{{ pname }}_otlog" id="pay_tab" value="pay" />
+            {{ entry_otlog_pay }} 
+            <input type="radio" name="{{ pname }}_otlog" id="stock_tab" value="stock" checked="checked" />
+            {{ entry_otlog_stock }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_otlog" id="standard_tab" value="0" checked="checked" />
+            {{ entry_otlog_standard }} 
+            <input type="radio" name="{{ pname }}_otlog" id="pay_tab" value="pay" />
+            {{ entry_otlog_pay }} 
+            <input type="radio" name="{{ pname }}_otlog" id="stock_tab" value="stock" />
+            {{ entry_otlog_stock }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_komis }}</td>
+          <td><input type="text" name="{{ pname }}_komis" value="{{ mixplatpro_komis is defined ? mixplatpro_komis : '' }}" >%</td>
+        </tr>
+        <tr>
+          <td>{{ entry_fixen }}</td>
+          <td>{% if (mixplatpro_fixen == 'proc') %} 
+            <input id="fixen0_tab" type="radio" name="{{ pname }}_fixen" value="0" />
+            {{ entry_fixen_order }} 
+            <input id="fixenP_tab" type="radio" name="{{ pname }}_fixen" value="proc" checked="checked" />
+            {{ entry_fixen_proc }} 
+            <input id="fixenF_tab" type="radio" name="{{ pname }}_fixen" value="fix" />
+            {{ entry_fixen_fix }} 
+            {% elseif (mixplatpro_fixen == 'fix') %} 
+            <input id="fixen0_tab" type="radio" name="{{ pname }}_fixen" value="0" />
+            {{ entry_fixen_order }} 
+            <input id="fixenP_tab" type="radio" name="{{ pname }}_fixen" value="proc" />
+            {{ entry_fixen_proc }} 
+            <input id="fixenF_tab" type="radio" name="{{ pname }}_fixen" value="fix" checked="checked" />
+            {{ entry_fixen_fix }} 
+            {% else %} 
+            <input id="fixen0_tab" type="radio" name="{{ pname }}_fixen" value="0" checked="checked" />
+            {{ entry_fixen_order }} 
+            <input id="fixenP_tab" type="radio" name="{{ pname }}_fixen" value="proc" />
+            {{ entry_fixen_proc }} 
+            <input id="fixenF_tab" type="radio" name="{{ pname }}_fixen" value="fix" />
+            {{ entry_fixen_fix }} 
+            {% endif %}</td>
+        </tr>
+        <tr class="hidefixen"{% if (not mixplatpro_fixen) %} style="display:none;"{% endif %}>
+          <td>
+            <span class="langfixenP"{% if (mixplatpro_fixen != 'proc') %} style="display:none;"{% endif %}>{{ entry_fixen_amount }}</span>
+            <span class="langfixenF"{% if (mixplatpro_fixen != 'fix') %} style="display:none;"{% endif %}>{{ entry_fixen_amount2 }}</span>
+          </td>
+          <td><input type="text" name="{{ pname }}_fixen_amount" value="{{ mixplatpro_fixen_amount is defined ? mixplatpro_fixen_amount : '' }}" >
+            <span class="langfixenP"{% if (mixplatpro_fixen != 'proc') %} style="display:none;"{% endif %}>%</span>
+            <span class="langfixenF"{% if (mixplatpro_fixen != 'fix') %} style="display:none;"{% endif %}>руб.</span>
+            <br />
+          {% if (error_fixen) %} 
+          <span class="error">{{ error_fixen }}</span>
+          {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_button_later }} <a class="toolt" title="{{ help_button_later }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% if (mixplatpro_button_later) %} 
+            <input type="radio" name="{{ pname }}_button_later" value="1" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_button_later" value="0" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_button_later" value="1" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_button_later" value="0" checked="checked" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_geo_zone }}</td>
+          <td><select name="{{ pname }}_geo_zone_id">
+            <option value="0">{{ text_all_zones }}</option>
+            {% for geo_zone in geo_zones %} 
+            {% if (geo_zone['geo_zone_id'] == mixplatpro_geo_zone_id) %} 
+            <option value="{{ geo_zone['geo_zone_id'] }}" selected="selected">{{ geo_zone['name'] }}</option>
+            {% else %} 
+            <option value="{{ geo_zone['geo_zone_id'] }}">{{ geo_zone['name'] }}</option>
+            {% endif %} 
+            {% endfor %} 
+          </select></td>
+        </tr>
+        <tr>
+          <td>{{ entry_sort_order }}</td>
+          <td><input type="text" name="{{ pname }}_sort_order" value="{{ mixplatpro_sort_order }}" size="1" /></td>
+        </tr>
+      </table>
+      <table class="table">
+        <h3>{{ entry_fzinfo }}</h3> 
+        <tr>
+          <td width="25%">{{ entry_cart }} <a class="toolt" title="{{ help_cart }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% if (mixplatpro_cart) %} 
+            <input id="cartOn_tab" type="radio" name="{{ pname }}_cart" value="0" />
+            {{ entry_cart_on }} 
+            <input id="cartOff_tab" type="radio" name="{{ pname }}_cart" value="1" checked="checked" />
+            {{ entry_cart_off }} 
+            {% else %} 
+            <input id="cartOn_tab" type="radio" name="{{ pname }}_cart" value="0" checked="checked" />
+            {{ entry_cart_on }} 
+            <input id="cartOff_tab" type="radio" name="{{ pname }}_cart" value="1" />
+            {{ entry_cart_off }} 
+            {% endif %}</td>
+        </tr>
+      </table>
+      <table class="hide54 table" {% if (mixplatpro_cart) %} style="display:none;"{% endif %}>
+        <tr>
+          <td width="25%">{{ entry_tax_system_code }}</td>
+          <td>
+            {% if (mixplatpro_tax_system_code == '2') %} 
+            <input type="radio" name="{{ pname }}_tax_system_code" value="1" />
+            {{ text_tax_system_code_1 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="2" checked="checked"/>
+            {{ text_tax_system_code_2 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="3" />
+            {{ text_tax_system_code_3 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="4" />
+            {{ text_tax_system_code_4 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="5" />
+            {{ text_tax_system_code_5 }}<br/>
+            {% elseif (mixplatpro_tax_system_code == '1') %} 
+            <input type="radio" name="{{ pname }}_tax_system_code" value="1" checked="checked" />
+            {{ text_tax_system_code_1 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="2" />
+            {{ text_tax_system_code_2 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="3" />
+            {{ text_tax_system_code_3 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="4" />
+            {{ text_tax_system_code_4 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="5" />
+            {{ text_tax_system_code_5 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="6" />
+            {{ text_tax_system_code_6 }} 
+            {% elseif (mixplatpro_tax_system_code == '3') %} 
+            <input type="radio" name="{{ pname }}_tax_system_code" value="1" />
+            {{ text_tax_system_code_1 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="2" />
+            {{ text_tax_system_code_2 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="3" checked="checked" />
+            {{ text_tax_system_code_3 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="4" />
+            {{ text_tax_system_code_4 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="5" />
+            {{ text_tax_system_code_5 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="6" />
+            {{ text_tax_system_code_6 }} 
+            {% elseif (mixplatpro_tax_system_code == '4') %} 
+            <input type="radio" name="{{ pname }}_tax_system_code" value="1" />
+            {{ text_tax_system_code_1 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="2" />
+            {{ text_tax_system_code_2 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="3" />
+            {{ text_tax_system_code_3 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="4" checked="checked" />
+            {{ text_tax_system_code_4 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="5" />
+            {{ text_tax_system_code_5 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="6" />
+            {{ text_tax_system_code_6 }} 
+            {% elseif (mixplatpro_tax_system_code == '5') %} 
+            <input type="radio" name="{{ pname }}_tax_system_code" value="1" />
+            {{ text_tax_system_code_1 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="2" />
+            {{ text_tax_system_code_2 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="3" />
+            {{ text_tax_system_code_3 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="4" />
+            {{ text_tax_system_code_4 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="5" checked="checked" />
+            {{ text_tax_system_code_5 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="6" />
+            {{ text_tax_system_code_6 }} 
+            {% elseif (mixplatpro_tax_system_code == '6') %} 
+            <input type="radio" name="{{ pname }}_tax_system_code" value="1" />
+            {{ text_tax_system_code_1 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="2" />
+            {{ text_tax_system_code_2 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="3" />
+            {{ text_tax_system_code_3 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="4" />
+            {{ text_tax_system_code_4 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="5" />
+            {{ text_tax_system_code_5 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="6" checked="checked" />
+            {{ text_tax_system_code_6 }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_tax_system_code" value="1" />
+            {{ text_tax_system_code_1 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="2" checked="checked" />
+            {{ text_tax_system_code_2 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="3" />
+            {{ text_tax_system_code_3 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="4" />
+            {{ text_tax_system_code_4 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="5"/>
+            {{ text_tax_system_code_5 }}<br/>
+            <input type="radio" name="{{ pname }}_tax_system_code" value="6" />
+            {{ text_tax_system_code_6 }} 
+            {% endif %}</td>
+        </tr>
+        <tr class="nonds" {% if (mixplatpro_tax_system_code == '1') %}style="display:none;"{% endif %}>
+          <td>{{ entry_nds_important }}</td>
+          <td>
+            <input type="radio" name="{{ pname }}_nds_important" value="6"  checked="checked"/>
+            {{ entry_nds_important_6 }} 
+          </td>
+        </tr>
+        <tr class="nds" {% if (mixplatpro_tax_system_code != '1') %}style="display:none;"{% endif %}>
+          <td>{{ entry_nds_important }} <a class="toolt" title="{{ help_nds_important }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>
+            {% set pole = 'tax' %} 
+            <select name="{{ pname }}_nds_important">
+            {% for ar in manypoles[pole] %} 
+            {% if (mixplatpro_nds_important == ar) %} 
+              <option value="{{ ar }}" selected="selected"/>{{ _context['entry_nds_important_' ~ ar] }}</option>
+            {% else %} 
+              <option value="{{ ar }}" />{{ _context['entry_nds_important_' ~ ar] }}</option>
+            {% endif %} 
+            {% endfor %} 
+            </select>
+          </td>
+        </tr>
+        <tr class="nds" {% if (mixplatpro_tax_system_code != '1') %}style="display:none;"{% endif %}>
+          <td>{{ entry_nds }}</td>
+          <td>{% if (mixplatpro_nds == 'important') %} 
+            <input type="radio" name="{{ pname }}_nds" id="tovar_tab" value="tovar" />
+            {{ entry_nds_tovar }} 
+            <input type="radio" name="{{ pname }}_nds" id="important_tab" value="important" checked="checked" />
+            {{ text_no }} 
+            {% elseif (mixplatpro_nds == 'tovar') %} 
+            <input type="radio" name="{{ pname }}_nds" id="tovar_tab" value="tovar" checked="checked" />
+            {{ entry_nds_tovar }} 
+            <input type="radio" name="{{ pname }}_nds" id="important_tab" value="important" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_nds" id="tovar_tab" value="tovar" checked="checked" />
+            {{ entry_nds_tovar }} 
+            <input type="radio" name="{{ pname }}_nds" id="important_tab" value="important" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr class="nds hidetovar" {% if (mixplatpro_tax_system_code != '1') %}style="display:none;"{% endif %}>
+
+          <td>{{ entry_tax }} <a class="toolt" title="{{ help_tax }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>
+            
+            {% set class_row = 0 %} 
+          {% for class in mixplatpro_classes %} 
+          {% if (class_row > 0) %} 
+          <label class="control-label class-row{{ class_row }}"></label>
+          {% endif %} 
+          <div class="row rule_tax class-row{{ class_row }}">
+            <div class="col-sm-3">
+              <select name="{{ pname }}_classes[{{ class_row }}][{{ pname }}_nalog]" class="form-control">
+                {% for tax_class in tax_classes %} 
+                <option {{ tax_class['tax_class_id'] == class[pname~'_nalog'] ? 'selected' : '' }} value="{{ tax_class['tax_class_id'] }}">{{ tax_class['title'] }}</option>
+                {% endfor %} 
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <select name="{{ pname }}_classes[{{ class_row }}][{{ pname }}_tax_rule]" class="form-control">
+                {% for tax in tax_rules %} 
+                <option {{ tax['id'] == class[pname~'_tax_rule'] ? 'selected' : '' }} value="{{ tax['id'] }}">{{ tax['name'] }}</option>
+                {% endfor %} 
+              </select>
+            </div>
+            {% if (class_row > 0) %} 
+            <div class="col-sm-1">
+              <button type="button" onclick="$('.class-row{{ class_row }}').remove();" class="btn btn-primary button_remove_rule_tax">Удалить</button>
+            </div>
+            {% endif %} 
+            {% set class_row = class_row + 1 %} 
+          </div>
+          {% endfor %} 
+          <label class="control-label"></label>
+          <div class="row">
+            <div class="col-sm-2">
+              <button type="button" id="button_add_taxt_rule" onclick="addClassRow()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ entry_customShip }} <a class="toolt" title="{{ help_customShip }}"><i class="fa fa-question-circle"></i></a></td>
+          <td><input name="{{ pname }}_customShip" value="{% if (mixplatpro_customShip is defined) %}{{ mixplatpro_customShip }}{% endif %}" /></td>
+        </tr>
+        <tr>
+          <td>{{ entry_show_free_shipping }} <a class="toolt" title="{{ help_show_free_shipping }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% if (mixplatpro_show_free_shipping) %} 
+            <input type="radio" name="{{ pname }}_show_free_shipping" value="1" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_show_free_shipping" value="0" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_show_free_shipping" value="1" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_show_free_shipping" value="0" checked="checked" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr class="nonds" {% if (mixplatpro_tax_system_code == '1') %}style="display:none;"{% endif %}>
+          <td>{{ entry_shipping_tax }}</td>
+          <td>
+            <input type="radio" name="{{ pname }}_shipping_tax" value="6"  checked="checked"/>
+            {{ entry_nds_important_6 }} 
+          </td>
+        </tr>
+        <tr class="nds" {% if (mixplatpro_tax_system_code != '1') %}style="display:none;"{% endif %}>
+          {% set pole = 'tax' %} 
+          <td>{{ entry_shipping_tax }}</td>
+          <td>
+            <select name="{{ pname }}_shipping_tax">
+            {% for ar in manypoles[pole] %} 
+            {% if (mixplatpro_shipping_tax == ar) %} 
+              <option value="{{ ar }}" selected="selected"/>{{ _context['entry_nds_important_' ~ ar] }}</option>
+            {% else %} 
+              <option value="{{ ar }}" />{{ _context['entry_nds_important_' ~ ar] }}</option>
+            {% endif %} 
+            {% endfor %} 
+            </select>
+          </td>
+        </tr>
+        <tr>
+          {% set pole = 'payment_mode_default' %} 
+          <td>>{{ _context['entry_' ~ pole] }}</td>
+          <td>
+            <select name="{{ pname }}_{{ pole }}">
+            {% for ar in manypoles[pole] %} 
+            {% if _context['mixplatpro_' ~ pole] == ar %} 
+            <option value="{{ ar }}" selected="selected"/>{{ _context['text_' ~ pole ~ '_' ~ ar] }}</option>
+            {% else %} 
+              <option value="{{ ar }}" />{{ _context['text_' ~ pole ~ '_' ~ ar] }}</option>
+            {% endif %} 
+            {% endfor %} 
+            </select>
+          </td>
+        </tr>
+        <tr>
+          {% set pole = 'payment_mode_source' %} 
+          <td>{{ _context['entry_' ~ pole] }} <a class="toolt" title="{{ _context['help_' ~ pole] }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>
+            <select name="{{ pname }}_{{ pole }}">
+            {% for ar in manypoles[pole] %} 
+            {% if _context['mixplatpro_' ~ pole] == ar %} 
+            <option value="{{ ar }}" selected="selected"/>{{ _context['text_' ~ ar] }}</option>
+            {% else %} 
+              <option value="{{ ar }}" />{{ _context['text_' ~ ar] }}</option>
+            {% endif %} 
+            {% endfor %} 
+            </select>
+          </td>
+        </tr>
+        <tr>
+          {% set pole = 'payment_subject_default' %} 
+          <td>{{ _context['entry_' ~ pole] }}</td>
+          <td>
+            <select name="{{ pname }}_{{ pole }}">
+            {% for ar in manypoles[pole] %} 
+            {% if _context['mixplatpro_' ~ pole] == ar %} 
+            <option value="{{ ar }}" selected="selected"/>{{ _context['text_' ~ pole ~ '_' ~ ar] }}</option>
+            {% else %} 
+              <option value="{{ ar }}" />{{ _context['text_' ~ pole ~ '_' ~ ar] }}</option>
+            {% endif %} 
+            {% endfor %} 
+            </select>
+          </td>
+        </tr>
+        <tr>
+          {% set pole = 'payment_subject_source' %} 
+          <td>{{ _context['entry_' ~ pole] }} <a class="toolt" title="{{ _context['help_' ~ pole] }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>
+            <select name="{{ pname }}_{{ pole }}">
+            {% for ar in manypoles[pole] %} 
+            {% if _context['mixplatpro_' ~ pole] == ar %}
+            <option value="{{ ar }}" selected="selected"/>{{ _context['text_' ~ ar] }}</option>
+            {% else %} 
+              <option value="{{ ar }}" />{{ _context['text_' ~ ar] }}</option>
+            {% endif %} 
+            {% endfor %} 
+            </select>
+          </td>
+        </tr>
+        <tr>
+          {% set pole = 'customName' %} 
+          <td>{{ _context['entry_' ~ pole] }} <a class="toolt" title="{{ _context['help_' ~ pole] }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>
+            <select name="{{ pname }}_{{ pole }}">
+            {% for ar in manypoles[pole] %} 
+            {% if _context['mixplatpro_' ~ pole] == ar %} 
+            <option value="{{ ar }}" selected="selected"/>{{ _context['text_' ~ ar] }}</option>
+            {% else %} 
+              <option value="{{ ar }}" />{{ _context['text_' ~ ar] }}</option>
+            {% endif %} 
+            {% endfor %} 
+            </select>
+          </td>
+        </tr>
+      </table> 
+      <table class="table"> 
+        <h3>{{ entry_afterpay }}</h3> 
+        <tr class="hideotlog" {% if (mixplatpro_otlog == 'pay') %}style="display:none;"{% endif %}>
+          <td width="25%">{{ text_createorder_or_notcreate }} <a class="toolt" title="{{ help_createorder_or_notcreate }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% if (mixplatpro_createorder_or_notcreate) %} 
+            <input type="radio" name="{{ pname }}_createorder_or_notcreate" value="1" checked="checked" id="nocreate" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_createorder_or_notcreate" value="0" id="create" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_createorder_or_notcreate" value="1" id="nocreate" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_createorder_or_notcreate" value="0" checked="checked" id="create" />
+            {{ text_no }} 
+            {% endif %}</td>
+       </tr>
+        <tr>
+          <td width="25%">{{ entry_success_alert_admin_tab }}</td>
+          <td>{% if (mixplatpro_success_alert_admin) %} 
+            <input type="radio" name="{{ pname }}_success_alert_admin" value="0" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_success_alert_admin" value="1" checked="checked" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_success_alert_admin" value="0" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_success_alert_admin" value="1" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_success_alert_customer_tab }}</td>
+          <td>{% if (mixplatpro_success_alert_customer) %} 
+            <input type="radio" name="{{ pname }}_success_alert_customer" value="0" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_success_alert_customer" value="1" checked="checked" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_success_alert_customer" value="0" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_success_alert_customer" value="1" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr class="showotlog" {% if (not mixplatpro_otlog) %}style="display:none;"{% endif %}>
+        <td>{{ entry_start_status }}</td>
+        <td><select name="{{ pname }}_start_status_id">
+            {% for order_status in order_statuses %} 
+            {% if (order_status['order_status_id'] == mixplatpro_start_status_id) %} 
+            <option value="{{ order_status['order_status_id'] }}" selected="selected">{{ order_status['name'] }}</option>
+            {% else %} 
+            <option value="{{ order_status['order_status_id'] }}">{{ order_status['name'] }}</option>
+            {% endif %} 
+            {% endfor %} 
+          </select></td>
+        </tr>
+        <tr>
+        <td>
+          <span class="hideotlog"{% if (mixplatpro_otlog) %} style="display:none;"{% endif %}>{{ entry_on_status }}</span>
+          <span class="showotlog"{% if (not mixplatpro_otlog) %} style="display:none;"{% endif %}>{{ entry_on_status2 }}</span>
+        </td>
+        <td><select name="{{ pname }}_on_status_id">
+            {% for order_status in order_statuses %} 
+            {% if (order_status['order_status_id'] == mixplatpro_on_status_id) %} 
+            <option value="{{ order_status['order_status_id'] }}" selected="selected">{{ order_status['name'] }}</option>
+            {% else %} 
+            <option value="{{ order_status['order_status_id'] }}">{{ order_status['name'] }}</option>
+            {% endif %} 
+            {% endfor %} 
+          </select></td>
+        </tr>
+        <tr>
+        <td>{{ entry_order_status }}</td>
+        <td><select name="{{ pname }}_order_status_id">
+            {% for order_status in order_statuses %} 
+            {% if (order_status['order_status_id'] == mixplatpro_order_status_id) %} 
+            <option value="{{ order_status['order_status_id'] }}" selected="selected">{{ order_status['name'] }}</option>
+            {% else %} 
+            <option value="{{ order_status['order_status_id'] }}">{{ order_status['name'] }}</option>
+            {% endif %} 
+            {% endfor %} 
+          </select></td>
+        </tr>
+      </table>
+      <table class="table"> 
+        <h3>{{ entry_texts }}</h3> 
+        <tr>
+          <td width="25%">{{ entry_instruction_tab }}</td>
+          <td>{% if (mixplatpro_instruction_attach) %} 
+            <input type="radio" name="{{ pname }}_instruction_attach" value="1" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_instruction_attach" value="0" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_instruction_attach" value="1" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_instruction_attach" value="0" checked="checked" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td width="25%">{{ entry_instruction }} <a class="toolt" title="{{ help_var }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_instruction_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_instruction_' ~ language.language_id] %}{{ _context['mixplatpro_instruction_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_mail_instruction_tab }}</td>
+          <td>{% if (mixplatpro_mail_instruction_attach) %} 
+            <input type="radio" name="{{ pname }}_mail_instruction_attach" value="1" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_mail_instruction_attach" value="0" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_mail_instruction_attach" value="1" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_mail_instruction_attach" value="0" checked="checked" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_mail_instruction }} <a class="toolt" title="{{ help_var }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_mail_instruction_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_mail_instruction_' ~ language.language_id] %}{{ _context['mixplatpro_mail_instruction_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_success_comment_tab }}</td>
+          <td>{% if (mixplatpro_success_comment_attach) %} 
+            <input type="radio" name="{{ pname }}_success_comment_attach" value="1" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_success_comment_attach" value="0" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_success_comment_attach" value="1" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_success_comment_attach" value="0" checked="checked" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_success_comment }} <a class="toolt" title="{{ help_var2 }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_success_comment_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_success_comment_' ~ language.language_id] %}{{ _context['mixplatpro_success_comment_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_hrefpage_tab }}</td>
+          <td>{% if (mixplatpro_hrefpage_text_attach) %} 
+            <input type="radio" name="{{ pname }}_hrefpage_text_attach" value="0" />
+            {{ text_default }} 
+            <input type="radio" name="{{ pname }}_hrefpage_text_attach" value="1" checked="checked" />
+            {{ text_my }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_hrefpage_text_attach" value="0" checked="checked" />
+            {{ text_default }} 
+            <input type="radio" name="{{ pname }}_hrefpage_text_attach" value="1" />
+            {{ text_my }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_hrefpage }} <a class="toolt" title="{{ help_var }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_hrefpage_text_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_hrefpage_text_' ~ language.language_id] %}{{ _context['mixplatpro_hrefpage_text_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_success_page_tab }}</td>
+          <td>{% if (mixplatpro_success_page_text_attach) %} 
+            <input type="radio" name="{{ pname }}_success_page_text_attach" value="0" />
+            {{ text_default }} 
+            <input type="radio" name="{{ pname }}_success_page_text_attach" value="1" checked="checked" />
+            {{ text_my }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_success_page_text_attach" value="0" checked="checked" />
+            {{ text_default }} 
+            <input type="radio" name="{{ pname }}_success_page_text_attach" value="1" />
+            {{ text_my }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_success_page_text }} <a class="toolt" title="{{ help_var }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_success_page_text_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_success_page_text_' ~ language.language_id] %}{{ _context['mixplatpro_success_page_text_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
+        </tr>
+         <tr>
+          <td>{{ entry_waiting_page_tab }}</td>
+          <td>{% if (mixplatpro_waiting_page_text_attach) %} 
+            <input type="radio" name="{{ pname }}_waiting_page_text_attach" value="0" />
+            {{ text_default }} 
+            <input type="radio" name="{{ pname }}_waiting_page_text_attach" value="1" checked="checked" />
+            {{ text_my }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_waiting_page_text_attach" value="0" checked="checked" />
+            {{ text_default }} 
+            <input type="radio" name="{{ pname }}_waiting_page_text_attach" value="1" />
+            {{ text_my }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_waiting_page_text }} <a class="toolt" title="{{ help_var }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_waiting_page_text_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_waiting_page_text_' ~ language.language_id] %}{{ _context['mixplatpro_waiting_page_text_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_fail_page_tab }}</td>
+          <td>{% if (mixplatpro_fail_page_text_attach) %} 
+            <input type="radio" name="{{ pname }}_fail_page_text_attach" value="0" />
+            {{ text_default }} 
+            <input type="radio" name="{{ pname }}_fail_page_text_attach" value="1" checked="checked" />
+            {{ text_my }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_fail_page_text_attach" value="0" checked="checked" />
+            {{ text_default }} 
+            <input type="radio" name="{{ pname }}_fail_page_text_attach" value="1" />
+            {{ text_my }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td>{{ entry_fail_page_text }} <a class="toolt" title="{{ help_var }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% for language in languages %} 
+          <img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_fail_page_text_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_fail_page_text_' ~ language.language_id] %}{{ _context['mixplatpro_fail_page_text_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
+        </tr>
+      </table>
+      </div>
+      <input type="hidden" name="{{ pname }}_methodcode" value="{{ methodcode }}" />
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  var class_row = {{ class_row }};
+
+  var addClassRow = function() {
+    html = '<label class="control-label class-row'+ class_row +'"></label>';
+    html += '<div class="row class-row'+ class_row +'">';
+    html += '<div class="col-sm-3">';
+    html += '<select name="{{ pname }}_classes['+ class_row +'][{{ pname }}_nalog]" class="form-control">';
+    html += '{% for tax_class in tax_classes %}';
+    html += '<option {{ tax_class["tax_class_id"] == class[pname~"_nalog"] ? "selected" : "" }} value="{{ tax_class["tax_class_id"] }}">{{ tax_class["title"] }}</option>';
+    html += '{% endfor %}';
+    html += '</select>';
+    html += '</div>';
+    html += '<div class="col-sm-3">';
+    html += '<select name="{{ pname }}_classes['+ class_row +'][{{ pname }}_tax_rule]" class="form-control">';
+    html += '{% for tax in tax_rules %}';
+    html += '<option {{ tax["id"] == class[pname~"_tax_rule"] ? "selected" : "" }} value="{{ tax["id"] }}">{{ tax["name"] }}</option>';
+    html += '{% endfor %}';
+    html += '</select>';
+    html += '</div>';
+    html += '<div class="col-sm-1">';
+    html += '<button type="button" onclick="$(\'.class-row' + class_row + '\').remove();" class="btn btn-danger button_remove_rule_tax"><i class="fa fa-trash-o"></i></button>';
+    html += '</div>';
+    $('.rule_tax:last').after(html);
+
+    class_row++;
+  }
+
+  $(document).ready(function() {
+    $('.required').css('color','red');
+    $('.error').css({'color': 'red', 'font-style': 'italic'})
+    $('.toolt').css('cursor','pointer');
+    $('.toolt').tooltip({title: '', placement: 'top', trigger: 'click', html: 'true'});
+
+    $('#named_tab').click(function () {
+      $('.hidedname').show('fast');
+      $('.hidename').hide('fast');
+    });
+    $('#namep_tab').click(function () {
+      $('.hidedname').hide('fast');
+      $('.hidename').show('fast');
+    });
+    $('#pay_tab').click(function () {
+      $('#create').prop("checked", true);
+      $('.hideotlog').hide('fast');
+      $('.showotlog').show('fast');
+    });
+    $('#stock_tab').click(function () {
+      $('#create').prop("checked", true);
+      $('.hideotlog').hide('fast');
+      $('.showotlog').show('fast');
+    });
+    $('#standard_tab').click(function () {
+      $('.hideotlog').show('fast');
+      $('.showotlog').hide('fast');
+    });
+    $('#fixen0_tab').click(function () {
+      $('.hidefixen').hide('fast');
+      $('.langfixenP').hide();
+      $('.langfixenF').hide();
+    });
+    $('#fixenP_tab').click(function () {
+      $('.hidefixen').show('fast');
+      $('.langfixenP').show();
+      $('.langfixenF').hide();
+    });
+    $('#fixenF_tab').click(function () {
+      $('.hidefixen').show('fast');
+      $('.langfixenP').hide();
+      $('.langfixenF').show();
+    });
+    $('#cartOn_tab').click(function () {
+      $('.hide54').show('fast');
+    });
+    $('#cartOff_tab').click(function () {
+      $('.hide54').hide('fast');
+    });
+
+    $('#tovar_tab').click(function () {
+      $('.hidetovar').show('fast');
+      $('.hideimportant').hide('fast');
+    });
+    $('#important_tab').click(function () {
+      $('.hidetovar').hide('fast');
+      $('.hideimportant').show('fast');
+    });
+
+    $("input[name='{{ pname }}_tax_system_code']").change(function() {
+        if ($("input[name='{{ pname }}_tax_system_code']:checked").val() == 1) {
+          $('.nds').show();
+          $('.nonds').hide();
+        } else {
+          $('.nds').hide();
+           $('.nonds').show();
+        }
+    });
+
+
+
+  });
+</script>
+{{ footer }} 
