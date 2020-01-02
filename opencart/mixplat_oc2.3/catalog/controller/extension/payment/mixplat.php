@@ -399,7 +399,7 @@ class ControllerExtensionPaymentmixplat extends Controller {
             $emails = explode(',', $this->config->get('config_alert_email'));
 
             foreach ($emails as $email) {
-                if ($email && preg_match($this->config->get('config_mail_regexp'), $email)) {
+                if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $mail->setTo($email);
                     $mail->send();
                 }
