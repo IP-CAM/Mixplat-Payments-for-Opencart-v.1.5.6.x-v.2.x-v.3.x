@@ -6,9 +6,6 @@ class ControllerExtensionPaymentMixplat extends Controller {
     private $shopver = '2.3.x';
 
     public function index($payname = 'mixplat') {
-
-        $lickey              = 'okformat';
-        $domain              = 'HTTP_HOST';
         $pname               = isset($payname['name']) ? $payname['name'] : $this->pname;
         $data['version']     = $this->ver;
         $data['shopversion'] = $this->shopver;
