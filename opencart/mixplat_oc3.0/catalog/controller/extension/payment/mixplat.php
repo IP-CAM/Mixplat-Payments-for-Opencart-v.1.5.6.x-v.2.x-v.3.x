@@ -150,7 +150,7 @@ class ControllerExtensionPaymentmixplat extends Controller {
             if ($this->config->get('payment_'.$order_info['payment_code'] . '_debug')) {
                 echo '<br><br><b>RESULT:</b><br><a href="' . $result->redirect_url . '">' . $result->redirect_url . '</a><br><br>';
             } else {
-                $this->response->redirect($result->formUrl);
+                $this->response->redirect($result->redirect_url);
             }
         } else {
             $result = (array) $result;
