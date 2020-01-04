@@ -277,19 +277,23 @@ class ControllerPaymentMixplat extends Controller {
         $this->data['breadcrumbs']   = array();
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),               
+            'separator' => false,
         );
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_order'),
-            'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'),               
+            'separator' => ' :: '
         );
 
-        $this->data['header']      = $this->load->controller('common/header');
-        $this->data['column_left'] = $this->load->controller('common/column_left');
-        $this->data['footer']      = $this->load->controller('common/footer');
-
-        $this->response->setOutput($this->load->view('payment/mixplat_view_status.tpl', $data));
+        $this->template = 'payment/mixplat_view_status.tpl';
+        $this->children = array(
+            'common/header',
+            'common/footer'
+        );
+                
+        $this->response->setOutput($this->render());
 
     }
 
@@ -298,7 +302,7 @@ class ControllerPaymentMixplat extends Controller {
 
         $this->load->model('payment/mixplat');
         $this->load->model('sale/order');
-        $order_info = $this->model_sale_order->getOrder($this->data['order_id']);
+        $order_info = $this->model_sale_order->getOrder($data['order_id']);
         $payment_id = $this->model_payment_mixplat->getPaymentIdByNum($order_info['order_id']);
 
         $request = array(
@@ -462,29 +466,35 @@ class ControllerPaymentMixplat extends Controller {
         $this->data['breadcrumbs']   = array();
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),               
+            'separator' => false,
         );
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_order'),
-            'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'),               
+            'separator' => ' :: '
         );
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_status'),
-            'href' => $this->url->link('payment/mixplat/status', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('payment/mixplat/status', 'token=' . $this->session->data['token'], 'SSL'),               
+            'separator' => ' :: '
         );
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_status_info'),
-            'href' => $this->url->link('payment/mixplat/info', 'order_id=' . (int) $this->request->get['order_id'] . '&token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('payment/mixplat/info', 'order_id=' . (int) $this->request->get['order_id'] . '&token=' . $this->session->data['token'], 'SSL'),               
+            'separator' => ' :: '
         );
 
-        $this->data['header']      = $this->load->controller('common/header');
-        $this->data['column_left'] = $this->load->controller('common/column_left');
-        $this->data['footer']      = $this->load->controller('common/footer');
-
-        $this->response->setOutput($this->load->view('payment/mixplat_info.tpl', $data));
+        $this->template = 'payment/mixplat_info.tpl';
+        $this->children = array(
+            'common/header',
+            'common/footer'
+        );
+                
+        $this->response->setOutput($this->render());
 
     }
 }

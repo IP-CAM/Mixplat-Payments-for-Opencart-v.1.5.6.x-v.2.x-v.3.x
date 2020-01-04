@@ -44,7 +44,7 @@ border:1px solid;
           <td><?php echo $viewstatus['date_created']; ?></td>
           <td><?php echo $viewstatus['date_enroled']; ?></td>
           <td><?php echo $viewstatus['sender']; ?></td>
-          <td><a class="btn btn-info" href="<?php echo $viewstatus['info']; ?>"><i class="fa fa-eye"></i></a></td>
+          <td><a class="btn btn-info" href="<?php echo $viewstatus['info']; ?>">Просмотр</a></td>
           </tr>
         <?php }
         ?>

@@ -11,13 +11,14 @@
     </div>
   
   <?php if (isset($capture) ) { ?>
+    <br>
     <div class="container-fluid">
       <div class="pull-left">
         <a href="<?php echo $capture; ?>" class="button"><?php echo $text_capture; ?></a>
         <a href="<?php echo $cancel; ?>" class="button"><?php echo $text_cancel; ?></a>
         <div class="panel"></div>
       </div>  
-    </div>
+    </div><br>
   <?php } ?>
   <?php if ($success) { ?>
   <div class="container-fluid">
