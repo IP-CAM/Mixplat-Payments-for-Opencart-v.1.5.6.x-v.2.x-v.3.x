@@ -351,7 +351,7 @@ class ControllerPaymentMixplat extends Controller {
         if ($this->user->hasPermission('access', 'sale/order')) {
 
             $curlito = array('order_id' => (int) $this->request->get['order_id']);
-            $jsons   = $this->curlito($curlito, 'authorize_dms_payment');
+            $jsons   = $this->curlito($curlito, 'confirm_payment');
             $json    = json_decode(stripslashes($jsons), true);
 
             $this->load->language('payment/mixplatpro');
@@ -383,7 +383,7 @@ class ControllerPaymentMixplat extends Controller {
         if ($this->user->hasPermission('access', 'sale/order')) {
 
             $curlito = array('order_id' => (int) $this->request->get['order_id']);
-            $jsons   = $this->curlito($curlito, 'cancel_dms_payment');
+            $jsons   = $this->curlito($curlito, 'cancel_payment');
             $json    = json_decode(stripslashes($jsons), true);
 
             $this->load->language('payment/mixplatpro');
@@ -428,9 +428,9 @@ class ControllerPaymentMixplat extends Controller {
         $json    = $this->curlito($curlito, 'get_payment');
         $json    = json_decode(stripslashes($json), true);
         if (is_array($json)) {
-            $payment_status = $this->model_payment_mixplat->getPaymentStatus($this->request->get['order_id']);
-            if (isset($payment_status['status']) && $payment_status['status'] == 2) {
-            //if (isset($json['status']) && $json['status'] == 'waiting') {
+            //$payment_status = $this->model_payment_mixplat->getPaymentStatus($this->request->get['order_id']);
+            //if (isset($payment_status['status']) && $payment_status['status'] == 2) {
+            if (isset($json['status_extended']) && $json['status_extended'] == 'pending_authorized') {
                 $this->data['capture']      = $this->url->link('payment/mixplat/capture', 'order_id=' . (int) $this->request->get['order_id'] . '&token=' . $this->session->data['token'], 'SSL');
                 $this->data['cancel']       = $this->url->link('payment/mixplat/cancel', 'order_id=' . (int) $this->request->get['order_id'] . '&token=' . $this->session->data['token'], 'SSL');
                 $this->data['text_capture'] = $this->language->get('text_capture');

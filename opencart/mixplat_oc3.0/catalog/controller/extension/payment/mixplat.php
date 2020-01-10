@@ -278,9 +278,23 @@ class ControllerExtensionPaymentmixplat extends Controller {
             return;
         }
 
-        if ($resdata['request'] != 'payment_status' && $resdata['status'] != 'success') {
+        if ($resdata['request'] != 'payment_status') {
             $this->jAnswer('ok');
             return;
+        }
+        else {      
+            if ($resdata['status'] == 'success' && $resdata['status_extended'] == 'success_success') {
+                $status = 1;
+            }
+            else{
+                if ($resdata['status'] == 'pending' && $resdata['status_extended'] == 'pending_authorized'){
+                    $status = 2;
+                }
+                else{
+                    $this->jAnswer('ok');
+                    return;
+                }
+            }
         }
 
         $this->load->model('checkout/order');
@@ -301,7 +315,7 @@ class ControllerExtensionPaymentmixplat extends Controller {
         $paystat = $this->model_extension_payment_mixplat->getPaymentStatus((int) $order_info['order_id']);
         if (!isset($paystat['status'])) {$paystat['status'] = 0;}
         if ($paystat['status'] == 1 || $paystat['status'] == 2 || $paystat['status'] == 3) {
-            $this->debug('CALLBACK', $res, 'STATUS FOR ORDER ' . $order_info['order_id'] . ' ALREDY CREATE');
+            $this->jAnswer('ok');
             return;
         }
 
