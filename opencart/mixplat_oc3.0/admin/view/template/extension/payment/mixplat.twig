@@ -72,24 +72,15 @@
         </tr>
         <tr>
           <td>{{ entry_name_tab }}</td>
-          <td>{% if (mixplatpro_name_attach) %} 
-            <input id="named_tab" type="radio" name="{{ pname }}_name_attach" value="0" />
-            {{ text_default }} 
-            <input id="namep_tab" type="radio" name="{{ pname }}_name_attach" value="1" checked="checked" />
-            {{ entry_proizvol }} 
-            {% else %} 
-            <input id="named_tab" type="radio" name="{{ pname }}_name_attach" value="0" checked="checked" />
-            {{ text_default }} 
-            <input id="namep_tab" type="radio" name="{{ pname }}_name_attach" value="1" />
-            {{ entry_proizvol }} 
-            {% endif %} 
-            <br><br>
-            <textarea class="hidedname" {% if (mixplatpro_name_attach) %}style="display:none;"{% endif %} cols="50" rows="1" disabled>{{ entry_name_ro }}</textarea>
-            <span class="hidename" {% if (not mixplatpro_name_attach) %}style="display:none;"{% endif %}>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_name_{{language.language_id }}" cols="50" rows="1">{% if _context['mixplatpro_name_' ~ language.language_id] %}{{ _context['mixplatpro_name_' ~ language.language_id] }}{% endif %}</textarea><br />
-            {% endfor %}<br />
-            {% if (_context['error_name_' ~ language.language_id]) %} 
+          <td>
+            {% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea style="vertical-align: middle" id="ndtext{{ language.language_id }}" name="{{ pname }}_name_{{language.language_id }}" cols="50" rows="1">{% if _context['mixplatpro_name_' ~ language.language_id] %}{{ _context['mixplatpro_name_' ~ language.language_id] }}{% endif %}</textarea>
+
+            <a {% if (_context['mixplatpro_name_' ~ language.language_id] == _context['mixplatpro_name_default_' ~ language.language_id]) %} style="display: none;"{% endif %} id="ndbut{{ language.language_id }}" class="btn btn-default" >{{ text_default }}</a>
+
+            {% if (_context['error_name_' ~ language.language_id]) %}<br />
               <span class="error">{{_context['error_name_' ~ language.language_id]}}</span>
-            {% endif %} 
+            {% endif %}
+            {% endfor %}
               <br />
             </span>
           </td>
@@ -113,12 +104,8 @@
           {% endif %}</td>
         </tr>
         <tr>
-          <td width="25%"><span class="required">*</span> {{ entry_payment_form_id }}</td>
-          <td><input type="text" name="{{ pname }}_payment_form_id" value="{% if (mixplatpro_payment_form_id is defined) %}{{ mixplatpro_payment_form_id }}{% endif %}" />
-          <br />
-          {% if (error_payment_form_id) %} 
-          <span class="error">{{ error_payment_form_id }}</span>
-          {% endif %}</td>
+          <td width="25%">{{ entry_payment_form_id }}</td>
+          <td><input type="text" name="{{ pname }}_payment_form_id" value="{% if (mixplatpro_payment_form_id is defined) %}{{ mixplatpro_payment_form_id }}{% endif %}" /></td>
         </tr>
         </table>
         <table class="table">
@@ -391,7 +378,7 @@
             {{ text_no }} 
             {% endif %}</td>
         </tr>
-        <tr class="nds hidetovar" {% if (mixplatpro_tax_system_code != '1') %}style="display:none;"{% endif %}>
+        <tr class="nds hidetovar" {% if (mixplatpro_tax_system_code != '1') %}style="display:none;"{% endif %}{% if (mixplatpro_tax_system_code == '1' and mixplatpro_nds == 'important') %} style="display:none;"{% endif %}>
 
           <td>{{ entry_tax }} <a class="toolt" title="{{ help_tax }}"><i class="fa fa-question-circle"></i></a></td>
           <td>
@@ -865,7 +852,25 @@
         }
     });
 
+    {% for language in languages %}
+      $("#ndbut{{ language.language_id }}").on('click', function () {
+          var t1 = '{{ _context['mixplatpro_name_default_' ~ language.language_id] }}';
+          $('#ndtext{{ language.language_id }}').val(function(i, val){
+            return t1;
+          });
+          $('#ndbut{{ language.language_id }}').hide('fast');
+      });
 
+      $( "#ndtext{{ language.language_id }}" ).keyup(function() {
+        if (document.getElementById('ndtext{{ language.language_id }}').value != '{{ _context['mixplatpro_name_default_' ~ language.language_id] }}'){
+          $('#ndbut{{ language.language_id }}').show('fast');
+        }
+        else{
+          $('#ndbut{{ language.language_id }}').hide('fast');
+        }
+
+      });
+    {% endfor %}
 
   });
 </script>

@@ -5,19 +5,19 @@ class ModelPaymentMixplat extends Model {
 
     public function getSettings() {
 
-        $setpro = array('status', 'server', 'debug', 'name_attach', 'password', 'project_id', 'payment_form_id', 'twostage', 'otlog', 'komis', 'fixen', 'fixen_amount', 'button_later', 'geo_zone_id', 'sort_order', 'cart', 'tax_system_code', 'nds_important', 'nds', 'customShip', 'show_free_shipping', 'shipping_tax', 'payment_mode_default', 'payment_mode_source', 'payment_subject_default', 'payment_subject_source', 'customName', 'createorder_or_notcreate', 'success_alert_admin', 'success_alert_customer', 'start_status_id', 'on_status_id', 'order_status_id', 'instruction_attach', 'mail_instruction_attach', 'success_comment_attach', 'hrefpage_text_attach', 'success_page_text_attach', 'waiting_page_text_attach', 'fail_page_text_attach');
+        $setpro = array('status', 'server', 'debug', 'password', 'project_id', 'payment_form_id', 'twostage', 'otlog', 'komis', 'fixen', 'fixen_amount', 'button_later', 'geo_zone_id', 'sort_order', 'cart', 'tax_system_code', 'nds_important', 'nds', 'customShip', 'show_free_shipping', 'shipping_tax', 'payment_mode_default', 'payment_mode_source', 'payment_subject_default', 'payment_subject_source', 'customName', 'createorder_or_notcreate', 'success_alert_admin', 'success_alert_customer', 'start_status_id', 'on_status_id', 'order_status_id', 'instruction_attach', 'mail_instruction_attach', 'success_comment_attach', 'hrefpage_text_attach', 'success_page_text_attach', 'waiting_page_text_attach', 'fail_page_text_attach');
         return $setpro;
     }
 
     public function getLangSettings() {
 
-        $setpro = array('name', 'instruction', 'mail_instruction', 'success_comment', 'hrefpage_text', 'success_page_text', 'waiting_page_text', 'fail_page_text');
+        $setpro = array('instruction', 'mail_instruction', 'success_comment', 'hrefpage_text', 'success_page_text', 'waiting_page_text', 'fail_page_text');
         return $setpro;
     }
 
     public function getErrSettings() {
 
-        $setpro = array('warning', 'project_id', 'payment_form_id', 'password', 'fixen');
+        $setpro = array('warning', 'project_id', 'password', 'fixen');
         return $setpro;
     }
 

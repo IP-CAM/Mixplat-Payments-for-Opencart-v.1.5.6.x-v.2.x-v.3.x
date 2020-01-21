@@ -72,25 +72,15 @@
         </tr>
         <tr>
           <td><?php echo $entry_name_tab; ?></td>
-          <td><?php if ($mixplatpro_name_attach) { ?>
-            <input id="named_tab" type="radio" name="<?php echo $pname; ?>_name_attach" value="0" />
-            <?php echo $text_default; ?>
-            <input id="namep_tab" type="radio" name="<?php echo $pname; ?>_name_attach" value="1" checked="checked" />
-            <?php echo $entry_proizvol; ?>
-            <?php } else { ?>
-            <input id="named_tab" type="radio" name="<?php echo $pname; ?>_name_attach" value="0" checked="checked" />
-            <?php echo $text_default; ?>
-            <input id="namep_tab" type="radio" name="<?php echo $pname; ?>_name_attach" value="1" />
-            <?php echo $entry_proizvol; ?>
-            <?php } ?>
-            <br><br>
-            <textarea class="hidedname" <?php if ($mixplatpro_name_attach) {?>style="display:none;"<?php } ?> cols="50" rows="1" disabled><?php echo $entry_name_ro; ?></textarea>
-            <span class="hidename" <?php if (!$mixplatpro_name_attach) {?>style="display:none;"<?php } ?>><?php foreach ($languages as $language) { ?><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_name_<?php echo $language['language_id']; ?>" cols="50" rows="1"><?php echo isset(${'mixplatpro_name_' . $language['language_id']}) ? ${'mixplatpro_name_' . $language['language_id']} : ''; ?></textarea>
+          <td>
+            <?php foreach ($languages as $language) { ?><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea style="vertical-align: middle" id="ndtext<?php echo $language['language_id']; ?>" name="<?php echo $pname; ?>_name_<?php echo $language['language_id']; ?>" cols="50" rows="1"><?php echo isset(${'mixplatpro_name_' . $language['language_id']}) ? ${'mixplatpro_name_' . $language['language_id']} : ''; ?></textarea>
+            
+              <a <?php if (${'mixplatpro_name_' . $language['language_id']} == ${'mixplatpro_name_default_' . $language['language_id']}) { ?> style="display: none;"<?php } ?> id="ndbut<?php echo $language['language_id']; ?>" class="btn btn-default" ><?php echo $text_default; ?></a>
             <?php if (${'error_name_' . $language['language_id']}) { ?><br />
               <span class="error"><?php echo ${'error_name_' . $language['language_id']}; ?></span>
             <?php } ?>
               <br />
-            <?php } ?></span>
+            <?php } ?>
           </td>
         </tr>
       </table>
@@ -112,12 +102,8 @@
           <?php } ?></td>
       	</tr>
         <tr>
-          <td width="25%"><span class="required">*</span> <?php echo $entry_payment_form_id; ?></td>
-          <td><input type="text" name="<?php echo $pname; ?>_payment_form_id" value="<?php if (isset($mixplatpro_payment_form_id)){ echo $mixplatpro_payment_form_id; }?>" />
-          <br />
-          <?php if ($error_payment_form_id) { ?>
-          <span class="error"><?php echo $error_payment_form_id; ?></span>
-          <?php } ?></td>
+          <td width="25%"><?php echo $entry_payment_form_id; ?></td>
+          <td><input type="text" name="<?php echo $pname; ?>_payment_form_id" value="<?php if (isset($mixplatpro_payment_form_id)){ echo $mixplatpro_payment_form_id; }?>" /></td>
         </tr>
         </table>
         <table class="table">
@@ -390,7 +376,7 @@
             <?php echo $text_no; ?>
             <?php } ?></td>
         </tr>
-        <tr class="nds hidetovar" <?php if ($mixplatpro_tax_system_code != '1') {?>style="display:none;"<?php } ?>>
+        <tr class="nds hidetovar" <?php if ($mixplatpro_tax_system_code != '1') {?>style="display:none;"<?php } if ($mixplatpro_tax_system_code == '1' && $mixplatpro_nds == 'important') { ?> style="display:none;"<?php } ?>>
 
           <td><?php echo $entry_tax; ?> <a class="toolt" title="<?php echo $help_tax; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td>
@@ -864,7 +850,25 @@
         }
     });
 
+    <?php foreach ($languages as $language) { ?>
+      $("#ndbut<?php echo $language['language_id']; ?>").on('click', function () {
+          var t1 = '<?php echo ${'mixplatpro_name_default_' . $language['language_id']}; ?>';
+          $('#ndtext<?php echo $language['language_id']; ?>').val(function(i, val){
+            return t1;
+          });
+          $('#ndbut<?php echo $language['language_id']; ?>').hide('fast');
+      });
 
+      $( "#ndtext<?php echo $language['language_id']; ?>" ).keyup(function() {
+        if (document.getElementById('ndtext<?php echo $language['language_id']; ?>').value != '<?php echo ${'mixplatpro_name_default_' . $language['language_id']}; ?>'){
+          $('#ndbut<?php echo $language['language_id']; ?>').show('fast');
+        }
+        else{
+          $('#ndbut<?php echo $language['language_id']; ?>').hide('fast');
+        }
+
+      });
+    <?php } ?>
 
   });
 </script>
