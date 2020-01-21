@@ -90,7 +90,7 @@
         <h3>{{ entry_kabinfo }}</h3>
         <tr>
           <td><span class="required">*</span> {{ entry_password }}</td>
-          <td><input type="password" name="{{ pname }}_password" value="{% if (mixplatpro_password is defined) %}{{ mixplatpro_password }}{% endif %}" />
+          <td><input size="48" name="{{ pname }}_password" value="{% if (mixplatpro_password is defined) %}{{ mixplatpro_password }}{% endif %}" />
           <br />
           {% if (error_password) %} 
           <span class="error">{{ error_password }}</span>

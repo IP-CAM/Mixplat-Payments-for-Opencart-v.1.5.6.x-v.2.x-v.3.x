@@ -88,7 +88,7 @@
         <h3><?php echo $entry_kabinfo; ?></h3>
         <tr>
           <td><span class="required">*</span> <?php echo $entry_password; ?></td>
-          <td><input type="password" name="<?php echo $pname; ?>_password" value="<?php if (isset($mixplatpro_password)){ echo $mixplatpro_password; }?>" />
+          <td><input size="44" name="<?php echo $pname; ?>_password" value="<?php if (isset($mixplatpro_password)){ echo $mixplatpro_password; }?>" />
           <br />
           <?php if ($error_password) { ?>
           <span class="error"><?php echo $error_password; ?></span>
