@@ -160,7 +160,7 @@
         </tr>
         <tr>
           <td><?php echo $entry_komis; ?></td>
-          <td><input type="text" name="<?php echo $pname; ?>_komis" value="<?php echo isset($mixplatpro_komis) ? $mixplatpro_komis : ''; ?>" >%</td>
+          <td><input size="6" type="text" name="<?php echo $pname; ?>_komis" value="<?php echo isset($mixplatpro_komis) ? $mixplatpro_komis : ''; ?>" >%</td>
         </tr>
         <tr>
           <td><?php echo $entry_fixen ; ?></td>
