@@ -598,36 +598,36 @@
         <tr>
           <td width="25%"><?php echo $entry_mail_instruction_tab; ?></td>
           <td><?php if ($mixplatpro_mail_instruction_attach) { ?>
-            <input type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="1" checked="checked" />
+            <input id="txt11" type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="1" checked="checked" />
             <?php echo $text_yes; ?>
-            <input type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="0" />
+            <input id="txt12" type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="0" />
             <?php echo $text_no; ?>
             <?php } else { ?>
-            <input type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="1" />
+            <input id="txt11" type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="1" />
             <?php echo $text_yes; ?>
-            <input type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="0" checked="checked" />
+            <input id="txt12" type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?></td>
         </tr>
-        <tr>
+        <tr<?php if (!$mixplatpro_mail_instruction_attach) { ?> style="display:none;"<?php } ?> id="txt1">
           <td><?php echo $entry_mail_instruction; ?> <a class="toolt" title="<?php echo  $help_var; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td><?php foreach ($languages as $language) { ?><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_mail_instruction_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_mail_instruction_' . $language['language_id']}) ? ${'mixplatpro_mail_instruction_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
         </tr>
         <tr>
           <td><?php echo $entry_success_comment_tab; ?></td>
           <td><?php if ($mixplatpro_success_comment_attach) { ?>
-            <input type="radio" name="<?php echo $pname; ?>_success_comment_attach" value="1" checked="checked" />
+            <input id="txt21" type="radio" name="<?php echo $pname; ?>_success_comment_attach" value="1" checked="checked" />
             <?php echo $text_yes; ?>
-            <input type="radio" name="<?php echo $pname; ?>_success_comment_attach" value="0" />
+            <input id="txt22" type="radio" name="<?php echo $pname; ?>_success_comment_attach" value="0" />
             <?php echo $text_no; ?>
             <?php } else { ?>
-            <input type="radio" name="<?php echo $pname; ?>_success_comment_attach" value="1" />
+            <input id="txt21" type="radio" name="<?php echo $pname; ?>_success_comment_attach" value="1" />
             <?php echo $text_yes; ?>
-            <input type="radio" name="<?php echo $pname; ?>_success_comment_attach" value="0" checked="checked" />
+            <input id="txt22" type="radio" name="<?php echo $pname; ?>_success_comment_attach" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?></td>
         </tr>
-        <tr>
+        <tr<?php if (!$mixplatpro_success_comment_attach) { ?> style="display:none;"<?php } ?> id="txt2">
           <td><?php echo $entry_success_comment; ?> <a class="toolt" title="<?php echo  $help_var2; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td><?php foreach ($languages as $language) { ?><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_success_comment_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_success_comment_' . $language['language_id']}) ? ${'mixplatpro_success_comment_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
         </tr>
@@ -637,90 +637,90 @@
         <tr>
           <td width="25%"><?php echo $entry_instruction_tab; ?></td>
           <td><?php if ($mixplatpro_instruction_attach) { ?>
-            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="1" checked="checked" />
+            <input id="txt31" type="radio" name="<?php echo $pname; ?>_instruction_attach" value="1" checked="checked" />
             <?php echo $text_yes; ?>
-            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="0" />
+            <input id="txt32" type="radio" name="<?php echo $pname; ?>_instruction_attach" value="0" />
             <?php echo $text_no; ?>
             <?php } else { ?>
-            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="1" />
+            <input id="txt31" type="radio" name="<?php echo $pname; ?>_instruction_attach" value="1" />
             <?php echo $text_yes; ?>
-            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="0" checked="checked" />
+            <input id="txt32" type="radio" name="<?php echo $pname; ?>_instruction_attach" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?></td>
         </tr>
-        <tr>
+        <tr<?php if (!$mixplatpro_instruction_attach) { ?> style="display:none;"<?php } ?> id="txt3">
           <td width="25%"><?php echo $entry_instruction; ?> <a class="toolt" title="<?php echo  $help_var; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td><?php foreach ($languages as $language) { ?><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_instruction_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_instruction_' . $language['language_id']}) ? ${'mixplatpro_instruction_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
         </tr>
         <tr>
           <td><?php echo $entry_hrefpage_tab; ?></td>
           <td><?php if ($mixplatpro_hrefpage_text_attach) { ?>
-            <input type="radio" name="<?php echo $pname; ?>_hrefpage_text_attach" value="0" />
+            <input id="txt41" type="radio" name="<?php echo $pname; ?>_hrefpage_text_attach" value="0" />
             <?php echo $text_default; ?>
-            <input type="radio" name="<?php echo $pname; ?>_hrefpage_text_attach" value="1" checked="checked" />
+            <input id="txt42" type="radio" name="<?php echo $pname; ?>_hrefpage_text_attach" value="1" checked="checked" />
             <?php echo $text_my; ?>
             <?php } else { ?>
-            <input type="radio" name="<?php echo $pname; ?>_hrefpage_text_attach" value="0" checked="checked" />
+            <input id="txt41" type="radio" name="<?php echo $pname; ?>_hrefpage_text_attach" value="0" checked="checked" />
             <?php echo $text_default; ?>
-            <input type="radio" name="<?php echo $pname; ?>_hrefpage_text_attach" value="1" />
+            <input id="txt42" type="radio" name="<?php echo $pname; ?>_hrefpage_text_attach" value="1" />
             <?php echo $text_my; ?>
             <?php } ?></td>
         </tr>
-        <tr>
+        <tr<?php if (!$mixplatpro_hrefpage_text_attach) { ?> style="display:none;"<?php } ?> id="txt4">
           <td><?php echo $entry_hrefpage; ?> <a class="toolt" title="<?php echo  $help_var; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td><?php foreach ($languages as $language) { ?><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_hrefpage_text_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_hrefpage_text_' . $language['language_id']}) ? ${'mixplatpro_hrefpage_text_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
         </tr>
         <tr>
           <td><?php echo $entry_success_page_tab; ?></td>
           <td><?php if ($mixplatpro_success_page_text_attach) { ?>
-            <input type="radio" name="<?php echo $pname; ?>_success_page_text_attach" value="0" />
+            <input id="txt51" type="radio" name="<?php echo $pname; ?>_success_page_text_attach" value="0" />
             <?php echo $text_default; ?>
-            <input type="radio" name="<?php echo $pname; ?>_success_page_text_attach" value="1" checked="checked" />
+            <input id="txt52" type="radio" name="<?php echo $pname; ?>_success_page_text_attach" value="1" checked="checked" />
             <?php echo $text_my; ?>
             <?php } else { ?>
-            <input type="radio" name="<?php echo $pname; ?>_success_page_text_attach" value="0" checked="checked" />
+            <input id="txt51" type="radio" name="<?php echo $pname; ?>_success_page_text_attach" value="0" checked="checked" />
             <?php echo $text_default; ?>
-            <input type="radio" name="<?php echo $pname; ?>_success_page_text_attach" value="1" />
+            <input id="txt52" type="radio" name="<?php echo $pname; ?>_success_page_text_attach" value="1" />
             <?php echo $text_my; ?>
             <?php } ?></td>
         </tr>
-        <tr>
+        <tr<?php if (!$mixplatpro_success_page_text_attach) { ?> style="display:none;"<?php } ?> id="txt5">
           <td><?php echo $entry_success_page_text; ?> <a class="toolt" title="<?php echo  $help_var; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td><?php foreach ($languages as $language) { ?><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_success_page_text_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_success_page_text_' . $language['language_id']}) ? ${'mixplatpro_success_page_text_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
         </tr>
          <tr>
           <td><?php echo $entry_waiting_page_tab; ?></td>
           <td><?php if ($mixplatpro_waiting_page_text_attach) { ?>
-            <input type="radio" name="<?php echo $pname; ?>_waiting_page_text_attach" value="0" />
+            <input id="txt61" type="radio" name="<?php echo $pname; ?>_waiting_page_text_attach" value="0" />
             <?php echo $text_default; ?>
-            <input type="radio" name="<?php echo $pname; ?>_waiting_page_text_attach" value="1" checked="checked" />
+            <input id="txt62" type="radio" name="<?php echo $pname; ?>_waiting_page_text_attach" value="1" checked="checked" />
             <?php echo $text_my; ?>
             <?php } else { ?>
-            <input type="radio" name="<?php echo $pname; ?>_waiting_page_text_attach" value="0" checked="checked" />
+            <input id="txt61" type="radio" name="<?php echo $pname; ?>_waiting_page_text_attach" value="0" checked="checked" />
             <?php echo $text_default; ?>
-            <input type="radio" name="<?php echo $pname; ?>_waiting_page_text_attach" value="1" />
+            <input id="txt62" type="radio" name="<?php echo $pname; ?>_waiting_page_text_attach" value="1" />
             <?php echo $text_my; ?>
             <?php } ?></td>
         </tr>
-        <tr>
+        <tr<?php if (!$mixplatpro_waiting_page_text_attach) { ?> style="display:none;"<?php } ?> id="txt6">
           <td><?php echo $entry_waiting_page_text; ?> <a class="toolt" title="<?php echo  $help_var; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td><?php foreach ($languages as $language) { ?><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_waiting_page_text_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_waiting_page_text_' . $language['language_id']}) ? ${'mixplatpro_waiting_page_text_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
         </tr>
         <tr>
           <td><?php echo $entry_fail_page_tab; ?></td>
           <td><?php if ($mixplatpro_fail_page_text_attach) { ?>
-            <input type="radio" name="<?php echo $pname; ?>_fail_page_text_attach" value="0" />
+            <input id="txt71"  type="radio" name="<?php echo $pname; ?>_fail_page_text_attach" value="0" />
             <?php echo $text_default; ?>
-            <input type="radio" name="<?php echo $pname; ?>_fail_page_text_attach" value="1" checked="checked" />
+            <input id="txt72" type="radio" name="<?php echo $pname; ?>_fail_page_text_attach" value="1" checked="checked" />
             <?php echo $text_my; ?>
             <?php } else { ?>
-            <input type="radio" name="<?php echo $pname; ?>_fail_page_text_attach" value="0" checked="checked" />
+            <input id="txt71" type="radio" name="<?php echo $pname; ?>_fail_page_text_attach" value="0" checked="checked" />
             <?php echo $text_default; ?>
-            <input type="radio" name="<?php echo $pname; ?>_fail_page_text_attach" value="1" />
+            <input id="txt72" type="radio" name="<?php echo $pname; ?>_fail_page_text_attach" value="1" />
             <?php echo $text_my; ?>
             <?php } ?></td>
         </tr>
-        <tr>
+        <tr<?php if (!$mixplatpro_fail_page_text_attach) { ?> style="display:none;"<?php } ?> id="txt7">
           <td><?php echo $entry_fail_page_text; ?> <a class="toolt" title="<?php echo  $help_var; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td><?php foreach ($languages as $language) { ?>
           <img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_fail_page_text_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_fail_page_text_' . $language['language_id']}) ? ${'mixplatpro_fail_page_text_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
@@ -766,14 +766,6 @@
     $('.toolt').css('cursor','pointer');
     $('.toolt').tooltip({title: '', placement: 'top', trigger: 'click', html: 'true'});
 
-    $('#named_tab').click(function () {
-      $('.hidedname').show('fast');
-      $('.hidename').hide('fast');
-    });
-    $('#namep_tab').click(function () {
-      $('.hidedname').hide('fast');
-      $('.hidename').show('fast');
-    });
     $('#pay_tab').click(function () {
       $('#create').prop("checked", true);
       $('.hideotlog').hide('fast');
@@ -817,6 +809,55 @@
     $('#important_tab').click(function () {
       $('.hidetovar').hide('fast');
       $('.hideimportant').show('fast');
+    });
+
+    $('#txt11').click(function () {
+      $('#txt1').show('fast');
+    });
+    $('#txt12').click(function () {
+      $('#txt1').hide('fast');
+    });
+
+    $('#txt21').click(function () {
+      $('#txt2').show('fast');
+    });
+    $('#txt22').click(function () {
+      $('#txt2').hide('fast');
+    });
+
+    $('#txt31').click(function () {
+      $('#txt3').show('fast');
+    });
+    $('#txt32').click(function () {
+      $('#txt3').hide('fast');
+    });
+
+    $('#txt42').click(function () {
+      $('#txt4').show('fast');
+    });
+    $('#txt41').click(function () {
+      $('#txt4').hide('fast');
+    });
+
+    $('#txt52').click(function () {
+      $('#txt5').show('fast');
+    });
+    $('#txt51').click(function () {
+      $('#txt5').hide('fast');
+    });
+
+    $('#txt62').click(function () {
+      $('#txt6').show('fast');
+    });
+    $('#txt61').click(function () {
+      $('#txt6').hide('fast');
+    });
+
+    $('#txt72').click(function () {
+      $('#txt7').show('fast');
+    });
+    $('#txt71').click(function () {
+      $('#txt7').hide('fast');
     });
 
     $("input[name='<?php echo $pname; ?>_tax_system_code']").change(function() {
