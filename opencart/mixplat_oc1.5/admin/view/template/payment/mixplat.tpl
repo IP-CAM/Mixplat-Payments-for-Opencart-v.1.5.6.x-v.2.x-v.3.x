@@ -332,13 +332,6 @@
             <?php echo $text_tax_system_code_5; ?>
             <?php } ?></td>
         </tr>
-        <tr class="nonds" <?php if ($mixplatpro_tax_system_code == '1') {?>style="display:none;"<?php } ?>>
-          <td><?php echo $entry_nds_important ; ?></td>
-          <td>
-            <input type="radio" name="<?php echo $pname; ?>_nds_important" value="6"  checked="checked"/>
-            <?php echo $entry_nds_important_6; ?>
-          </td>
-        </tr>
         <tr class="nds" <?php if ($mixplatpro_tax_system_code != '1') {?>style="display:none;"<?php } ?>>
           <td><?php echo $entry_nds_important ; ?><br><small><?php echo $help_nds_important; ?></small></td>
           <td>
@@ -431,13 +424,6 @@
             <input type="radio" name="<?php echo $pname; ?>_show_free_shipping" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?></td>
-        </tr>
-        <tr class="nonds" <?php if ($mixplatpro_tax_system_code == '1') {?>style="display:none;"<?php } ?>>
-          <td><?php echo $entry_shipping_tax ; ?></td>
-          <td>
-            <input type="radio" name="<?php echo $pname; ?>_shipping_tax" value="6"  checked="checked"/>
-            <?php echo $entry_nds_important_6; ?>
-          </td>
         </tr>
         <tr class="nds" <?php if ($mixplatpro_tax_system_code != '1') {?>style="display:none;"<?php } ?>>
           <?php $pole = 'tax'; ?>
