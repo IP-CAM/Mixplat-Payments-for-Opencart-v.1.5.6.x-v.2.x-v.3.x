@@ -592,27 +592,11 @@
         </tr>
       </table>
       <table class="table"> 
-        <h3><?php echo $entry_texts; ?></h3> 
+        <h3><?php echo $entry_texts; ?></h3>
+        <br>
+        <h4><?php echo $entry_texts2; ?></h4>
         <tr>
-          <td width="25%"><?php echo $entry_instruction_tab; ?></td>
-          <td><?php if ($mixplatpro_instruction_attach) { ?>
-            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?></td>
-        </tr>
-        <tr>
-          <td width="25%"><?php echo $entry_instruction; ?> <a class="toolt" title="<?php echo  $help_var; ?>"><i class="fa fa-question-circle"></i></a></td>
-          <td><?php foreach ($languages as $language) { ?><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_instruction_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_instruction_' . $language['language_id']}) ? ${'mixplatpro_instruction_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
-        </tr>
-        <tr>
-          <td><?php echo $entry_mail_instruction_tab; ?></td>
+          <td width="25%"><?php echo $entry_mail_instruction_tab; ?></td>
           <td><?php if ($mixplatpro_mail_instruction_attach) { ?>
             <input type="radio" name="<?php echo $pname; ?>_mail_instruction_attach" value="1" checked="checked" />
             <?php echo $text_yes; ?>
@@ -646,6 +630,27 @@
         <tr>
           <td><?php echo $entry_success_comment; ?> <a class="toolt" title="<?php echo  $help_var2; ?>"><i class="fa fa-question-circle"></i></a></td>
           <td><?php foreach ($languages as $language) { ?><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_success_comment_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_success_comment_' . $language['language_id']}) ? ${'mixplatpro_success_comment_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
+        </tr>
+      </table>
+      <table class="table">
+        <h4><?php echo $entry_texts1; ?></h4>
+        <tr>
+          <td width="25%"><?php echo $entry_instruction_tab; ?></td>
+          <td><?php if ($mixplatpro_instruction_attach) { ?>
+            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="1" checked="checked" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="0" />
+            <?php echo $text_no; ?>
+            <?php } else { ?>
+            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="1" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="<?php echo $pname; ?>_instruction_attach" value="0" checked="checked" />
+            <?php echo $text_no; ?>
+            <?php } ?></td>
+        </tr>
+        <tr>
+          <td width="25%"><?php echo $entry_instruction; ?> <a class="toolt" title="<?php echo  $help_var; ?>"><i class="fa fa-question-circle"></i></a></td>
+          <td><?php foreach ($languages as $language) { ?><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align:top;"/> <textarea name="<?php echo $pname; ?>_instruction_<?php echo $language['language_id']; ?>" cols="50" rows="3"><?php echo isset(${'mixplatpro_instruction_' . $language['language_id']}) ? ${'mixplatpro_instruction_' . $language['language_id']} : ''; ?></textarea><br /><?php } ?></td>
         </tr>
         <tr>
           <td><?php echo $entry_hrefpage_tab; ?></td>

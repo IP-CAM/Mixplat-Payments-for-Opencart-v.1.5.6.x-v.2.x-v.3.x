@@ -594,27 +594,11 @@
         </tr>
       </table>
       <table class="table"> 
-        <h3>{{ entry_texts }}</h3> 
+        <h3>{{ entry_texts }}</h3>
+        <br>
+        <h4>{{ entry_texts2 }}</h4>
         <tr>
-          <td width="25%">{{ entry_instruction_tab }}</td>
-          <td>{% if (mixplatpro_instruction_attach) %} 
-            <input type="radio" name="{{ pname }}_instruction_attach" value="1" checked="checked" />
-            {{ text_yes }} 
-            <input type="radio" name="{{ pname }}_instruction_attach" value="0" />
-            {{ text_no }} 
-            {% else %} 
-            <input type="radio" name="{{ pname }}_instruction_attach" value="1" />
-            {{ text_yes }} 
-            <input type="radio" name="{{ pname }}_instruction_attach" value="0" checked="checked" />
-            {{ text_no }} 
-            {% endif %}</td>
-        </tr>
-        <tr>
-          <td width="25%">{{ entry_instruction }} <a class="toolt" title="{{ help_var }}"><i class="fa fa-question-circle"></i></a></td>
-          <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_instruction_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_instruction_' ~ language.language_id] %}{{ _context['mixplatpro_instruction_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
-        </tr>
-        <tr>
-          <td>{{ entry_mail_instruction_tab }}</td>
+          <td width="25%">{{ entry_mail_instruction_tab }}</td>
           <td>{% if (mixplatpro_mail_instruction_attach) %} 
             <input type="radio" name="{{ pname }}_mail_instruction_attach" value="1" checked="checked" />
             {{ text_yes }} 
@@ -648,6 +632,27 @@
         <tr>
           <td>{{ entry_success_comment }} <a class="toolt" title="{{ help_var2 }}"><i class="fa fa-question-circle"></i></a></td>
           <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_success_comment_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_success_comment_' ~ language.language_id] %}{{ _context['mixplatpro_success_comment_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
+        </tr>
+      </table>
+      <table class="table"> 
+        <h4>{{ entry_texts1 }}</h4>
+        <tr>
+          <td width="25%">{{ entry_instruction_tab }}</td>
+          <td>{% if (mixplatpro_instruction_attach) %} 
+            <input type="radio" name="{{ pname }}_instruction_attach" value="1" checked="checked" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_instruction_attach" value="0" />
+            {{ text_no }} 
+            {% else %} 
+            <input type="radio" name="{{ pname }}_instruction_attach" value="1" />
+            {{ text_yes }} 
+            <input type="radio" name="{{ pname }}_instruction_attach" value="0" checked="checked" />
+            {{ text_no }} 
+            {% endif %}</td>
+        </tr>
+        <tr>
+          <td width="25%">{{ entry_instruction }} <a class="toolt" title="{{ help_var }}"><i class="fa fa-question-circle"></i></a></td>
+          <td>{% for language in languages %}<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" style="vertical-align:top;"/> <textarea name="{{ pname }}_instruction_{{language.language_id }}" cols="50" rows="3">{% if _context['mixplatpro_instruction_' ~ language.language_id] %}{{ _context['mixplatpro_instruction_' ~ language.language_id] }}{% endif %}</textarea><br />{% endfor %}</td>
         </tr>
         <tr>
           <td>{{ entry_hrefpage_tab }}</td>
