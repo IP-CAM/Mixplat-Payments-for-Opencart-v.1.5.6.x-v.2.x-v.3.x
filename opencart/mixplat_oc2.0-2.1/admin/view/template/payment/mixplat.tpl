@@ -265,9 +265,7 @@
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="4" />
             <?php echo $text_tax_system_code_4; ?><br/>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="5" />
-            <?php echo $text_tax_system_code_5; ?><br/>
-            <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="6" />
-            <?php echo $text_tax_system_code_6; ?>
+            <?php echo $text_tax_system_code_5; ?>
             <?php } else if ($mixplatpro_tax_system_code == '3'){ ?>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="1" />
             <?php echo $text_tax_system_code_1; ?><br/>
@@ -278,9 +276,7 @@
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="4" />
             <?php echo $text_tax_system_code_4; ?><br/>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="5" />
-            <?php echo $text_tax_system_code_5; ?><br/>
-            <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="6" />
-            <?php echo $text_tax_system_code_6; ?>
+            <?php echo $text_tax_system_code_5; ?>
             <?php } else if ($mixplatpro_tax_system_code == '4'){ ?>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="1" />
             <?php echo $text_tax_system_code_1; ?><br/>
@@ -291,9 +287,7 @@
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="4" checked="checked" />
             <?php echo $text_tax_system_code_4; ?><br/>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="5" />
-            <?php echo $text_tax_system_code_5; ?><br/>
-            <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="6" />
-            <?php echo $text_tax_system_code_6; ?>
+            <?php echo $text_tax_system_code_5; ?>
             <?php } else if ($mixplatpro_tax_system_code == '5'){ ?>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="1" />
             <?php echo $text_tax_system_code_1; ?><br/>
@@ -304,9 +298,7 @@
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="4" />
             <?php echo $text_tax_system_code_4; ?><br/>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="5" checked="checked" />
-            <?php echo $text_tax_system_code_5; ?><br/>
-            <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="6" />
-            <?php echo $text_tax_system_code_6; ?>
+            <?php echo $text_tax_system_code_5; ?>
             <?php } else if ($mixplatpro_tax_system_code == '6'){ ?>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="1" />
             <?php echo $text_tax_system_code_1; ?><br/>
@@ -317,9 +309,7 @@
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="4" />
             <?php echo $text_tax_system_code_4; ?><br/>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="5" />
-            <?php echo $text_tax_system_code_5; ?><br/>
-            <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="6" checked="checked" />
-            <?php echo $text_tax_system_code_6; ?>
+            <?php echo $text_tax_system_code_5; ?>
             <?php } else { ?>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="1" />
             <?php echo $text_tax_system_code_1; ?><br/>
@@ -330,9 +320,7 @@
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="4" />
             <?php echo $text_tax_system_code_4; ?><br/>
             <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="5"/>
-            <?php echo $text_tax_system_code_5; ?><br/>
-            <input type="radio" name="<?php echo $pname; ?>_tax_system_code" value="6" />
-            <?php echo $text_tax_system_code_6; ?>
+            <?php echo $text_tax_system_code_5; ?>
             <?php } ?></td>
         </tr>
         <tr class="nonds" <?php if ($mixplatpro_tax_system_code == '1') {?>style="display:none;"<?php } ?>>
