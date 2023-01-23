@@ -38,7 +38,11 @@ class ModelPaymentMixplat extends Model {
         }
 
         if ($status) {
-            $metname = htmlspecialchars_decode($this->config->get($pname . '_name_' . $this->config->get('config_language_id')));
+            if ($this->config->get($pname . '_name_attach')) {
+                $metname = htmlspecialchars_decode($this->config->get($pname . '_name_' . $this->config->get('config_language_id')));
+            } else {
+                $metname = $this->language->get('text_title');
+            }
             $method_data = array(
                 'code'       => $pname,
                 'title'      => $metname,

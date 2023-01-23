@@ -476,15 +476,14 @@ class ControllerPaymentmixplat extends Controller {
         $paystat = $this->model_payment_mixplat->getPaymentStatus($order_info['order_id']);
         if (!isset($paystat['status'])) {$paystat['status'] = 0;}
 
+        $this->data['paystat'] = $paystat['status'];
         $this->language->load('payment/mixplatpro');
         $this->load->language('payment/' . $order_info['payment_code']);
         $this->data['button_pay']    = $this->language->get('button_pay');
         $this->data['heading_title'] = $this->language->get('heading_title');
         $this->document->setTitle($this->language->get('heading_title'));
 
-        if ($paystat['status'] == 0) {
-
-            $this->data['paystat'] = 0;
+        if ($paystat['status'] != 1 && $paystat['status'] != 2 && $paystat['status'] != 3) {
 
             if (strpos($order_info['payment_code'], 'mixplat') === false) {
                 $this->redirect($this->url->link('error/not_found'));
@@ -501,7 +500,6 @@ class ControllerPaymentmixplat extends Controller {
             }
 
         } else {
-            $this->data['paystat'] = 1;
             $this->data['send_text'] = $this->language->get('oplachen');
         }
 

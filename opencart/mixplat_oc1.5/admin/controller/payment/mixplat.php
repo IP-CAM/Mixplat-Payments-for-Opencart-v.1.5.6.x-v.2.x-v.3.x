@@ -52,27 +52,6 @@ class ControllerPaymentMixplat extends Controller {
                 }
             }
 
-            if ($language['code'] == 'ru') {
-                $this->data['mixplatpro_name_default_' . $language['language_id']] = $this->language->get('entry_name_ro');
-                if (isset($this->request->post[$pname . '_name_' . $language['language_id']])) {
-                    $this->data['mixplatpro_name_' . $language['language_id']] = $this->request->post[$pname . '_name_' . $language['language_id']];
-                } else if (!$this->config->get($pname . '_name_' . $language['language_id'])) {
-                    $this->data['mixplatpro_name_' . $language['language_id']] = $this->language->get('entry_name_ro');
-                } else {
-                    $this->data['mixplatpro_name_' . $language['language_id']] = $this->config->get($pname . '_name_' . $language['language_id']);
-                }
-            }
-            else{
-                $this->data['mixplatpro_name_default_' . $language['language_id']] = $this->language->get('entry_name_ro-en');
-                if (isset($this->request->post[$pname . '_name_' . $language['language_id']])) {
-                    $this->data['mixplatpro_name_' . $language['language_id']] = $this->request->post[$pname . '_name_' . $language['language_id']];
-                } else if (!$this->config->get($pname . '_name_' . $language['language_id'])) {
-                    $this->data['mixplatpro_name_' . $language['language_id']] = $this->language->get('entry_name_ro-en');
-                } else {
-                    $this->data['mixplatpro_name_' . $language['language_id']] = $this->config->get($pname . '_name_' . $language['language_id']);
-                }
-            }
-
             foreach ($seterrsLang as $seterrLang) {
 
                 if (isset($this->error[$seterrLang . '_' . $language['language_id']])) {
@@ -191,13 +170,15 @@ class ControllerPaymentMixplat extends Controller {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        $this->load->model('localisation/language');
+        if ($this->request->post[$pname . '_name_attach']) {
+            $this->load->model('localisation/language');
 
-        $languages = $this->model_localisation_language->getLanguages();
+            $languages = $this->model_localisation_language->getLanguages();
 
-        foreach ($languages as $language) {
-            if (empty($this->request->post[$pname . '_name_' . $language['language_id']])) {
-                $this->error['name_' . $language['language_id']] = $this->language->get('error_name');
+            foreach ($languages as $language) {
+                if (empty($this->request->post[$pname . '_name_' . $language['language_id']])) {
+                    $this->error['name_' . $language['language_id']] = $this->language->get('error_name');
+                }
             }
         }
 
